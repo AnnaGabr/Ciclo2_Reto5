@@ -1,16 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Modelo;
 
-/**
- *
- * @author Gaby
- */
 public class ModeloCliente {
-    
+     
+// Se declaran los atributos
     private String nombreUsuario;
     private String nombre;
     private String apellido;
@@ -19,6 +11,7 @@ public class ModeloCliente {
     private String clave;
     private String fecha;
     
+    // Se crea el contructor
     public ModeloCliente(String nombreUsuario, String nombre, String apellido, String email, long numeroCelular, String clave, String fecha){
         this.nombreUsuario = nombreUsuario;
         this.nombre = nombre;
@@ -29,72 +22,52 @@ public class ModeloCliente {
         this.fecha = fecha;
     }
 
-    /**
-     * @return the nombreUsuario
-     */
+    // Se crea el getter del NombreUsuario
     public String getNombreUsuario() {
         return nombreUsuario;
     }
 
-    /**
-     * @return the nombre
-     */
+    // Se crea el getter del Nombre
     public String getNombre() {
         return nombre;
     }
 
-    /**
-     * @return the apellido
-     */
+    // Se crea el getter del Apellido
     public String getApellido() {
         return apellido;
     }
 
-    /**
-     * @return the email
-     */
+    // Se crea el getter del Email
     public String getEmail() {
         return email;
     }
 
-    /**
-     * @param email the email to set
-     */
+    // Se crea el setter del Email
     public void setEmail(String email) {
         this.email = email;
     }
 
-    /**
-     * @return the numeroCelular
-     */
+    // Se crea el getter del NumeroCelular
     public long getNumeroCelular() {
         return numeroCelular;
     }
 
-    /**
-     * @param numeroCelular the numeroCelular to set
-     */
+    // Se crea el setter del NumeroCelular
     public void setNumeroCelular(long numeroCelular) {
         this.numeroCelular = numeroCelular;
     }
 
-    /**
-     * @return the clave
-     */
+    // Se crea el getter de la Clave
     public String getClave() {
         return clave;
     }
 
-    /**
-     * @param clave the clave to set
-     */
+    // Se crea el setter de la Clave
     public void setClave(String clave) {
         this.clave = clave;
     }
 
-    /**
-     * @return the fecha
-     */
+    // Se crea el getter de la Fecha
     public String getFecha() {
         return fecha;
     }

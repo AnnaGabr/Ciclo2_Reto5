@@ -30,10 +30,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         DAO_cliente = new ClienteDAO();
         initComponents();
         initNombreUsuarios();
+        initTabla();
     }
     
     public void initNombreUsuarios(){
         cb_cliUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(DAO_cliente.listaNombreUsuarios()));
+    }
+    
+    private void initTabla(){                                         
+        // Aqui se hace la consulta
+        tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
+                DAO_cliente.obtenerClientes_obj(),
+                new String[]{
+                    "Usuario", "Nombre", "Apellido", "Email", "Celular", "Clave", "Fecha"
+                }
+        ));
     }
 
     /**
@@ -260,6 +271,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             df_cliCelular.setText("");
             df_cliClave.setText("");
             df_cliFecha.setText("");
+            initTabla();
         } else {
             JOptionPane.showMessageDialog(this, "Hubo un problema al crear el cliente");
         }
@@ -308,6 +320,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         df_cliCelular.setText("");
         df_cliClave.setText("");
         df_cliFecha.setText("");
+        initTabla();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -334,6 +347,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 df_cliCelular.setText(clienteSeleccionado.getNumeroCelular()+"");
                 df_cliClave.setText(clienteSeleccionado.getClave());
                 df_cliFecha.setText(clienteSeleccionado.getFecha());
+                initTabla();
             }
         } else {
             JOptionPane.showMessageDialog(this, "Hubo un problema al actualizar el cliente");
