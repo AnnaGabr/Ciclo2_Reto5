@@ -203,57 +203,74 @@ public class ClienteDAO{
                 JOptionPane.showMessageDialog(null, "El cliente no se eliminó!");
             }
         }
-        catch(SQLException ex){
-            ex.printStackTrace();
-            //JOptionPane.showMessageDialog(null, "Código : " + ex.getErrorCode() 
-            //                            + "\nError :" + ex.getMessage());
+        catch(SQLException ex){ // Si nos lanza alguna excepcion, imprimimos el error en una ventana emergente
+            //ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Código : " + ex.getErrorCode() + "\nError :" + ex.getMessage());
         }
     }
     
+    // Creamos el metodo para actualizar un cliente
+    // se le entrega un objeto de tipo ModeloCliente y nos devuelve un booleano
     public boolean actualizarCliente(ModeloCliente cliente){
+        // Usamos try para agarrar cualquier excepcion que nos mande
         try{
+            // Primero revisamos si la coneccion es nula, si es asi se conecta mediante ConnectionDB.getConnection()
             if(conn == null){
                 conn = ConnectionDB.getConnection();
             }
+            // Creamos nuestro string con la consulta sql, colocnado ? en los campos que debe llenar el usuario
             String sql = "UPDATE cliente SET cliEmail = ?, cliCelular = ?, cliClave = ? WHERE cliUserName = ?;";
+            // Preparamos el statement
             PreparedStatement statement = conn.prepareStatement(sql);
+            // Colocamos la informacion de nuestro objeto ModeloCliente en las ? que habiamos puesto en el string con la consulta sql
             statement.setString(1, cliente.getEmail());
             statement.setLong(2, cliente.getNumeroCelular());
             statement.setString(3, cliente.getClave());
             statement.setString(4, cliente.getNombreUsuario());
-            int filasInsertadas = statement.executeUpdate();
-            if(filasInsertadas > 0){
+            // Ejecutamos el statement y guardamos en un entero el numero de filas afectadas a
+            int filasActualizadas = statement.executeUpdate();
+            // Si este numero de filas actualizadas es mayor a 0, significa que si sucedio algo
+            // y devolvemos un valor true
+            if(filasActualizadas > 0){
                 //System.out.println("Se insertó");
                 //JOptionPane.showMessageDialog(null, "El registro se actualizó exitosamente!");
                 return true;
-            }else{
-                //System.out.println("No se inertó");
-                JOptionPane.showMessageDialog(null, "El registro no se actualizó!");
             }
         }
-        catch(SQLException ex){
-            ex.printStackTrace();
-            //JOptionPane.showMessageDialog(null, "Código : " + ex.getErrorCode() 
-            //                            + "\nError :" + ex.getMessage());
+        catch(SQLException ex){ // Si nos lanza una excepcion abrimos una ventana emergente con el error
+            //ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Código : " + ex.getErrorCode() 
+                                        + "\nError :" + ex.getMessage());
         }
+        // En caso de que no nos haya devuelvo true, significa que algo salio mal, y nos devuelve false
         return false;
     }
     
+    // Creamos un metodo que nos devuelva un String[] con los nombres de usuario qu ehay hasta el momento
     public String[] listaNombreUsuarios(){
+        // Primero creamos un ArrayList vacio
         ArrayList<String> listaClientes = new ArrayList();
         try {
+            // Y antes que nada, como siempre, verificamos si la ocneccion es nula, de ser asi lo conectamos
             if(conn == null){
                 conn = ConnectionDB.getConnection();
             }
+            // Creamos nuestro statement
             Statement statement = conn.createStatement();
+            // Y el string que tiene nuestra consulta sql
             String sql = "SELECT cliUserName FROM cliente ORDER BY 1;";
+            // Y lo ejecutamos, guardando los resultados de nuestra consulta en result
             ResultSet result = statement.executeQuery(sql);
+            // Luego iteramos sobre nuestro resultado
             while(result.next()){
+                // Y lo vamos agregando a nuestro ArrayList
                 listaClientes.add(result.getString(1));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            // Si nos lanza alguna excepcion sacamos una ventana emergente con el error
+            JOptionPane.showMessageDialog(null, "Código : " + ex.getErrorCode() + "\nError :" + ex.getMessage());
         }
+        // Y al final retornamos nuestro ArrayList pero convertido en un String[]
         return listaClientes.toArray(new String[0]);
     }
 }
